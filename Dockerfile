@@ -29,7 +29,7 @@ RUN mkdir /root/.faraday && \
 	chown root:root -R /root/.faraday/ && \
     chown root:root -R /root/faraday/ && \
     chmod a+x /root/faraday/ && \
-    chmod 755 /root/faraday/startup.sh
+    chmod 755 /root/faraday/startupClient.sh
 
 WORKDIR /root/faraday
 
@@ -41,7 +41,7 @@ RUN pip2 install -r requirements_server.txt
 EXPOSE 5984
 EXPOSE 5985
 
-ENTRYPOINT ["./startup.sh"]
+ENTRYPOINT ["./startupClient.sh"]
 
 
 
