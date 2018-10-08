@@ -22,7 +22,7 @@ RUN apt-get update && apt-get install -q -y --fix-missing \
 	
 RUN pip install --upgrade pip 	
 WORKDIR /root
-RUN git clone https://github.com/merryjing/test.git faraday
+RUN git clone https://github.com/merryjing/faraday.git faraday
 
 RUN mkdir /root/.faraday && \
 	mkdir /root/.faraday/config && \
