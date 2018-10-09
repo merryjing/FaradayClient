@@ -1,5 +1,6 @@
 FROM ubuntu:16.04
 MAINTAINER Merry Jing
+
 RUN apt-get update && apt-get install -q -y --fix-missing \
 	git \
 	curl \
@@ -11,17 +12,22 @@ RUN apt-get update && apt-get install -q -y --fix-missing \
 	libssl-dev \
 	libffi-dev \
 	pkg-config \
-	libssl-dev \
-	libffi-dev \
 	libxml2-dev \
 	libxslt1-dev \
 	libfreetype6-dev \
-	libpng12-dev && \
+	libpng12-dev \
+	libpq-dev \
+	gir1.2-gtk-3.0 \
+	gir1.2-vte-2.91 \
+	python-gobject \
+	zsh && \
 	apt-get clean && \
 	rm -rf /var/lib/apt/lists/*
 	
-RUN pip install --upgrade pip 	
+RUN pip install --upgrade pip 
+	
 WORKDIR /root
+
 RUN git clone https://github.com/merryjing/test.git faraday
 
 RUN mkdir /root/.faraday && \
@@ -35,15 +41,17 @@ WORKDIR /root/faraday
 
 RUN ./install.sh
 
-RUN pip2 install -r requirements_server.txt
+RUN pip2 install -r requirements.txt && \
+    pip2 install -r requirements_extras.txt
 
-#RUN pip install psycopg2-binary
-EXPOSE 5984
-EXPOSE 5985
+RUN pip install psycopg2-binary && \
+    pip install lxml && \
+	pip install restkit && \
+	pip install beautifulsoup4 && \
+	pip2 install vext && \
+    pip2 install vext.pygtk
+
+EXPOSE 9876
+EXPOSE 9977
 
 ENTRYPOINT ["./startupClient.sh"]
-
-
-
-
-
